@@ -48,8 +48,7 @@ In order to build vis you will need a
 compiler, a [POSIX.1-2008](http://pubs.opengroup.org/onlinepubs/9699919799/)
 compatible environment as well as:
 
- * [libtermkey](http://www.leonerd.org.uk/code/libtermkey/)
- * [curses](https://en.wikipedia.org/wiki/Curses_(programming_library)) (recommended)
+ * [curses](https://en.wikipedia.org/wiki/Curses_(programming_library)) (mandatory)
  * [Lua](http://www.lua.org/) >= 5.2 (optional)
  * [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/) >= 0.12
    (optional runtime dependency required for syntax highlighting)
