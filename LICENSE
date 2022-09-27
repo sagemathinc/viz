@@ -1,4 +1,8 @@
-vis as a whole is licensed under the following standard ISC license:
+I'm keeping this ISC ("Internet Systems Consortium") license for this derived version.
+Copyright William Stein, for anything I added, as recorded in the Git history.
+Of course Marc André Tanner did all the real work.
+
+viz as a whole is licensed under the following standard ISC license:
 
  Copyright © 2014-2020 Marc André Tanner, et al.
 
