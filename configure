@@ -24,9 +24,6 @@ Fine tuning of the installation directories:
   --mandir=DIR            man pages [PREFIX/share/man]
 
 Optional features:
-  --enable-curses         build with Curses terminal output [yes]
-  --enable-lua            build with Lua support [auto]
-  --enable-lpeg-static    build with LPeg static linking [auto]
   --enable-tre            build with TRE regex support [auto]
   --enable-selinux        build with SELinux support [auto]
   --enable-acl            build with POSIX ACL support [auto]
@@ -121,7 +118,6 @@ MANDIR='$(PREFIX)/share/man'
 help=yes
 curses=yes
 lua=auto
-lpeg=auto
 tre=auto
 selinux=auto
 acl=auto
@@ -139,12 +135,6 @@ case "$arg" in
 --environment-only) environmentonly=yes ;;
 --enable-help|--enable-help=yes) help=yes ;;
 --disable-help|--enable-help=no) help=no ;;
---enable-curses|--enable-curses=yes) curses=yes ;;
---disable-curses|--enable-curses=no) curses=no ;;
---enable-lua|--enable-lua=yes) lua=yes ;;
---disable-lua|--enable-lua=no) lua=no ;;
---enable-lpeg-static|--enable-lpeg-static=yes) lpeg=yes ;;
---disable-lpeg-static|--enable-lpeg-static=no) lpeg=no ;;
 --enable-tre|--enable-tre=yes) tre=yes ;;
 --disable-tre|--enable-tre=no) tre=no ;;
 --enable-selinux|--enable-selinux=yes) selinux=yes ;;
@@ -390,9 +380,6 @@ fi
 
 CONFIG_LUA=0
 
-# enabling builtin lpeg requires lua support
-test "$lpeg" = "yes" -a "$lua" = "no" && fail "$0: need lua support for built-in lpeg"
-test "$lpeg" = "yes" && lua=yes
 
 if test "$lua" != "no" ; then
 
@@ -449,63 +436,6 @@ EOF
 	if test $CONFIG_LUA -eq 1; then
 		CFLAGS_LUA="$CFLAGS_LUA -DLUA_COMPAT_5_1 -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_3 -DLUA_COMPAT_ALL"
 	fi
-fi
-
-CONFIG_LPEG=0
-
-if test $CONFIG_LUA -eq 1 -a "$lpeg" != "no" ; then
-
-	printf "checking for Lua statically linked liblpeg...\n"
-
-cat > "$tmpc" <<EOF
-#include <lua.h>
-#include <lualib.h>
-#include <lauxlib.h>
-
-int main(int argc, char *argv[]) {
-	lua_State *L = luaL_newstate();
-	luaL_openlibs(L);
-	extern int luaopen_lpeg(lua_State *L);
-	lua_getglobal(L, "package");
-	lua_getfield(L, -1, "preload");
-	lua_pushcfunction(L, luaopen_lpeg);
-	lua_setfield(L, -2, "lpeg");
-	lua_pop(L, 2);
-	lua_close(L);
-	return 0;
-}
-EOF
-
-	for liblpeg in lpeg lua5.3-lpeg lua5.2-lpeg; do
-		printf " checking for static %s... " "$liblpeg"
-
-		if test "$have_pkgconfig" = "yes" ; then
-			CFLAGS_LPEG=$(pkg-config --cflags $liblpeg 2>/dev/null)
-			LDFLAGS_LPEG=$(pkg-config --libs $liblpeg 2>/dev/null)
-			if test $? -eq 0 && $CC $CFLAGS $CFLAGS_LUA $CFLAGS_LPEG "$tmpc" \
-				$LDFLAGS $LDFLAGS_LUA $LDFLAGS_LPEG -o "$tmpo" >/dev/null 2>&1 ; then
-				CONFIG_LPEG=1
-				printf "yes\n"
-				break
-			fi
-		fi
-
-		CFLAGS_LPEG=""
-		LDFLAGS_LPEG="-l$liblpeg"
-
-		if $CC $CFLAGS $CFLAGS_LUA $CFLAGS_LPEG "$tmpc" \
-			$LDFLAGS $LDFLAGS_LUA $LDFLAGS_LPEG -o "$tmpo" >/dev/null 2>&1 ; then
-			CONFIG_LPEG=1
-			printf "yes\n"
-			break
-		else
-			printf "no\n"
-			CFLAGS_LPEG=""
-			LDFLAGS_LPEG=""
-		fi
-	done
-
-	test "$lpeg" = "yes" -a $CONFIG_LPEG -ne 1 && fail "$0: cannot find liblpeg"
 fi
 
 CONFIG_ACL=0
@@ -615,9 +545,6 @@ LDFLAGS_TRE = $LDFLAGS_TRE
 CONFIG_LUA = $CONFIG_LUA
 CFLAGS_LUA = $CFLAGS_LUA
 LDFLAGS_LUA = $LDFLAGS_LUA
-CONFIG_LPEG = $CONFIG_LPEG
-CFLAGS_LPEG = $CFLAGS_LPEG
-LDFLAGS_LPEG = $LDFLAGS_LPEG
 CONFIG_ACL = $CONFIG_ACL
 CFLAGS_ACL = $CFLAGS_ACL
 LDFLAGS_ACL = $LDFLAGS_ACL
