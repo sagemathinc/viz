@@ -26,6 +26,9 @@ SRC = array.c \
 	vis-prompt.c \
 	vis-registers.c \
 	vis-text-objects.c \
+	libtermkey/termkey.c \
+	libtermkey/driver-csi.c \
+	libtermkey/driver-ti.c \
 	$(REGEX_SRC)
 
 ELF = vis vis-menu vis-digraph
@@ -51,6 +54,8 @@ LDFLAGS_STD ?= -lc
 
 CFLAGS_LIBC ?= -DHAVE_MEMRCHR=0
 
+CFLAGS_TERMKEY = -Ilibtermkey
+
 CFLAGS_VIS = $(CFLAGS_AUTO) $(CFLAGS_TERMKEY) $(CFLAGS_CURSES) $(CFLAGS_ACL) \
 	$(CFLAGS_SELINUX) $(CFLAGS_TRE) $(CFLAGS_LUA) $(CFLAGS_LPEG) $(CFLAGS_STD) \
 	$(CFLAGS_LIBC)
@@ -64,7 +69,7 @@ CFLAGS_VIS += -DCONFIG_TRE=${CONFIG_TRE}
 CFLAGS_VIS += -DCONFIG_SELINUX=${CONFIG_SELINUX}
 CFLAGS_VIS += -DCONFIG_ACL=${CONFIG_ACL}
 
-LDFLAGS_VIS = $(LDFLAGS_AUTO) $(LDFLAGS_TERMKEY) $(LDFLAGS_CURSES) $(LDFLAGS_ACL) \
+LDFLAGS_VIS = $(LDFLAGS_AUTO) $(LDFLAGS_CURSES) $(LDFLAGS_ACL) \
 	$(LDFLAGS_SELINUX) $(LDFLAGS_TRE) $(LDFLAGS_LUA) $(LDFLAGS_LPEG) $(LDFLAGS_STD)
 
 STRIP?=strip
