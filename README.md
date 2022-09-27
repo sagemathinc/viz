@@ -1,4 +1,4 @@
-# Viz - Combining Modal Editing with Structural Regular Expressions
+# Viz \- A very fast and lightweight vim\-like editor written in C and Lua with multiple cursors and syntax highlight
 
 **This is a fork of https://github.com/martanne/vis, meant to be more friendly to my needs.**
 
