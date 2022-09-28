@@ -1,9 +1,9 @@
 Lua LPeg lexers for vis
 =======================
 
-Viz reuses the [Lua](http://www.lua.org/) [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/)
-based lexers from the [Scintillua](http://foicica.com/scintillua/) project
-which is now part of the [Scintilla 3.x branch](https://foicica.com/hg/scintilla/file/tip/lexlua).  We include a copy of this code in the `lpeg/` subdirectory.
+Vis reuses the [Lua](http://www.lua.org/) [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/)
+based lexers from the [Scintillua](https://orbitalquark.github.io/scintillua/index.html) project.
+We include a copy of lpeg in the `lpeg/` subdirectory.
 
 # Viz integration
 
@@ -26,13 +26,13 @@ where `<name>` corresponds to the filename without the `.lua` extension.
 
 To add a new lexer, start with the template quoted below or a lexer of a
 similiar language. Read the
-[lexer module documentation](http://foicica.com/scintillua/api.html#lexer).
+[lexer module documentation](https://orbitalquark.github.io/scintillua/api.html#lexer).
 The [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/) introduction might also
 be useful.
 
 For development purposes it is recommended to test the lexers from a lua
 script as described in the
-[Scintillua manual](http://foicica.com/scintillua/manual.html#Using.Scintillua.as.a.Lua.Library).
+[Scintillua manual](https://orbitalquark.github.io/scintillua/manual.html#Using.Scintillua.as.a.Lua.Library).
 
 To enable auto syntax highlighting when opening a file you can associate your
 new lexer with a set of file extensions by adding a corresponding entry into
@@ -43,26 +43,46 @@ Changes to existing lexers should also be sent upstream for consideration.
 A template for new lexers:
 
 ```lua
+-- Copyright 2006-2021 Mitchell. See LICENSE.
 -- ? LPeg lexer.
 
-local l = require('lexer')
-local token, word_match = l.token, l.word_match
-local P, R, S = lpeg.P, lpeg.R, lpeg.S
+local lexer = require('lexer')
+local token, word_match = lexer.token, lexer.word_match
+local P, S = lpeg.P, lpeg.S
 
-local M = {_NAME = '?'}
+local lex = lexer.new('?')
 
 -- Whitespace.
-local ws = token(l.WHITESPACE, l.space^1)
+lex:add_rule('whitespace', token(lexer.WHITESPACE, lexer.space^1))
 
-M._rules = {
-  {'whitespace', ws},
-}
+-- Keywords.
+lex:add_rule('keyword', token(lexer.KEYWORD, word_match[[
+  keyword1 keyword2 keyword3
+]]))
 
-M._tokenstyles = {
+-- Identifiers.
+lex:add_rule('identifier', token(lexer.IDENTIFIER, lexer.word))
 
-}
+-- Strings.
+local sq_str = lexer.range("'")
+local dq_str = lexer.range('"')
+lex:add_rule('string', token(lexer.STRING, sq_str + dq_str))
 
-return M
+-- Comments.
+lex:add_rule('comment', token(lexer.COMMENT, lexer.to_eol('#')))
+
+-- Numbers.
+lex:add_rule('number', token(lexer.NUMBER, lexer.number))
+
+-- Operators.
+lex:add_rule('operator', token(lexer.OPERATOR, S('+-*/%^=<>,.{}[]()')))
+
+-- Fold points.
+lex:add_fold_point(lexer.KEYWORD, 'start', 'end')
+lex:add_fold_point(lexer.OPERATOR, '{', '}')
+lex:add_fold_point(lexer.COMMENT, lexer.fold_consecutive_lines('#'))
+
+return lex
 ```
 
 # Color Themes
