@@ -67,10 +67,7 @@ return M
 
 # Color Themes
 
-The `../themes` directory contains the color schemes. Depending on the
-number of colors supported by your terminal, vis will start with either
-the `default-16` or `default-256` theme. Symlink it to your preferred
-style or add a command like the following one to your `visrc.lua`:
+The `../themes` directory contains the color schemes. To set a different theme,   add a command like the following one to your `visrc.lua`:
 
 ```lua
 require('vis')

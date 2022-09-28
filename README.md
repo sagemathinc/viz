@@ -35,9 +35,9 @@ Here's an example of how to get going with configuring vis.  The default for vis
 ```sh
 ~/.config/vis$ cat visrc.lua 
 require('vis')
-vis.events.subscribe(vis.events.INIT, function()    
+vis.events.subscribe(vis.events.INIT, function()
    vis:command('set theme light-16')
-end)  
+end)
 ```
 
 Documentation

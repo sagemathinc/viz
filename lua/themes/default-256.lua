@@ -1,1 +1,1 @@
-zenburn.lua
+default.lua
