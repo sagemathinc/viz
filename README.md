@@ -30,13 +30,13 @@ options. You can also manually tweak the generated `config.mk` file.
 
 ## Persistent Configuration
 
-Here's an example of how to get going with configuring vis.  The default for vis is dark mode.  If you want light mode by default, make `~/.config/vis,` with a lua program to set the theme in a persistent way:
+Here's an example of how to get going with configuring vis.  If you want to change the default theme to be zenburn, make `~/.config/vis,` a lua program to set the theme in a persistent way:
 
 ```sh
 ~/.config/vis$ cat visrc.lua 
 require('vis')
 vis.events.subscribe(vis.events.INIT, function()
-   vis:command('set theme light-16')
+   vis:command('set theme zenburn')
 end)
 ```
 
