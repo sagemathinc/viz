@@ -1,14 +1,14 @@
 Lua LPeg lexers for vis
 =======================
 
-Vis reuses the [Lua](http://www.lua.org/) [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/)
+Viz reuses the [Lua](http://www.lua.org/) [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/)
 based lexers from the [Scintillua](http://foicica.com/scintillua/) project
-which is now part of the [Scintilla 3.x branch](https://foicica.com/hg/scintilla/file/tip/lexlua).
+which is now part of the [Scintilla 3.x branch](https://foicica.com/hg/scintilla/file/tip/lexlua).  We include a copy of this code in the `lpeg/` subdirectory.
 
-# Vis integration
+# Viz integration
 
-Vis searches the lexers in the following locations (check the end of the
-`:help` output for the exact paths used by your binary):
+Viz searches the lexers in the following locations \(check the end of the
+`:help` output for the exact paths used by your binary\):
 
  * `$VIS_PATH/lexers`
  * `./lua/lexers` relative to the binary location (using `/proc/self/exe`)
@@ -42,7 +42,7 @@ Changes to existing lexers should also be sent upstream for consideration.
 
 A template for new lexers:
 
-```
+```lua
 -- ? LPeg lexer.
 
 local l = require('lexer')
@@ -69,14 +69,15 @@ return M
 
 The `../themes` directory contains the color schemes. Depending on the
 number of colors supported by your terminal, vis will start with either
-the `default-16` or `default-256` theme. Symlink it to your prefered
+the `default-16` or `default-256` theme. Symlink it to your preferred
 style or add a command like the following one to your `visrc.lua`:
 
-```
-vis:command("set theme solarized")
+```lua
+require('vis')
+vis.events.subscribe(vis.events.INIT, function()
+   -- misc configuration
+   vis:command("set theme solarized")
+   -- ...
+end)
 ```
 
-# Dependencies
-
- * [Lua](http://www.lua.org/) 5.1 or greater
- * [LPeg](http://www.inf.puc-rio.br/~roberto/lpeg/) 0.12 or greater
