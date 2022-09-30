@@ -4,7 +4,9 @@
 
 Please see https://github.com/martanne/vis for the overall goals of that editor.  This readme is mostly about specifics to this fork.
 
-**Name:** I've renamed it `viz` instead of `vis`, because on macOS there is already a standard program `/usr/bin/vis` that "display non-printable characters in a visual format", and related vis functionality in the standard lib (`man 3 vis`), which has nothing to do with this editor.  It's confusing.  `viz` also fits with the "z" theme of the [Zython project](https://zython.org/), which is the motivation for this editor.
+Also, watch [this amazing 15 minute talk by the creator of vis](https://youtu.be/y41MyOrPt8Q) ([demo](https://asciinema.org/a/PxFKNGvklhbP5sxjEXafIxY2Y)), which emphasizes how to use multiple cursors and how selection is aware of the document structure: 
+
+**Name:** I've renamed it `viz` instead of `vis`, because on macOS there is already a standard program `/usr/bin/vis` that "display non\-printable characters in a visual format", and related vis functionality in the standard lib \(`man 3 vis`\), which has nothing to do with this editor.  It's confusing. The name  `viz` also fits with the "z" theme of the [Zython project](https://zython.org/), which is the motivation for this editor.
 
 Build instructions
 ------------------
