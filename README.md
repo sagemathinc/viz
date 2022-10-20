@@ -8,8 +8,7 @@ Also, watch [this amazing 15 minute talk by the creator of vis](https://youtu.be
 
 **Name:** I've renamed it `viz` instead of `vis`, because on macOS there is already a standard program `/usr/bin/vis` that "display non\-printable characters in a visual format", and related vis functionality in the standard lib \(`man 3 vis`\), which has nothing to do with this editor.  It's confusing. The name  `viz` also fits with the "z" theme of the [Zython project](https://zython.org/), which is the motivation for this editor.
 
-Build instructions
-------------------
+## Build instructions
 
 In order to build vis you will need a
 [C99](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf)
@@ -42,8 +41,7 @@ vis.events.subscribe(vis.events.INIT, function()
 end)
 ```
 
-Documentation
--------------
+## Documentation
 
 Most of the upstream docs for `vis` should apply just fine \-\- End user documentation can be found in the
 [`vis(1)` manual page](http://martanne.github.io/vis/man/vis.1.html)
@@ -55,4 +53,12 @@ Learn about some differences compared to
 respectively.
 
 [C API](https://vis.readthedocs.io/) as well as [Lua API](http://martanne.github.io/vis/doc/)
-documentation is also available.
+documentation is also available.https://news.ycombinator.com/item?id=11434195
+## Links
+
+- [7 Vim Editors for Better Productivity in 2022](https://geekflare.com/best-vim-editors/) - Vis is one of the editors reviewed here.
+- [Hacker News about Vis (2016)](https://news.ycombinator.com/item?id=11434195)
+- [It’s Time For a New Text Editor (2020)](https://distro.tube/guest-articles/its-time-for-new-text-editor.html) - a short blog post about Vis with a configuration example and comparison to vim.
+- [Have you tried vis? (2018)](https://discuss.kakoune.com/t/have-you-tried-vis/123/2) - discussion comparing vis with Kakoune
+- [Hacker News Comments by the Developer of Vis](https://news.ycombinator.com/threads?id=martanne) - there is some interesting wisdom about the implementation of Vis here, e.g., _"As the main developer of an editor (vis) using a similar segmented data structure (a piece chain, similar to a rope, but storing the text junks in a double linked list, thus asymptotically worse) I can attest that the performance is generally very good."
+- [vis: a simpler vim (2016)](http://tuxdiary.com/2016/04/07/vis/) - a quick review
