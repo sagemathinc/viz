@@ -6,7 +6,7 @@ Please see https://github.com/martanne/vis for the overall goals of that editor.
 
 Also, watch [this amazing 15 minute talk by the creator of vis](https://youtu.be/y41MyOrPt8Q) ([demo](https://asciinema.org/a/PxFKNGvklhbP5sxjEXafIxY2Y)), which emphasizes how to use multiple cursors and how selection is aware of the document structure: 
 
-**Name:** I've renamed it `viz` instead of `vis`, because on macOS there is already a standard program `/usr/bin/vis` that "display non\-printable characters in a visual format", and related vis functionality in the standard lib \(`man 3 vis`\), which has nothing to do with this editor.  It's confusing. The name  `viz` also fits with the "z" theme of the [Zython project](https://zython.org/), which is the motivation for this editor.
+**Name:** I've renamed it `viz` instead of `vis`, because on macOS there is already a standard program `/usr/bin/vis` that "display non\-printable characters in a visual format", and related vis functionality in the standard lib \(`man 3 vis`\), which has nothing to do with this editor.  It's confusing to me.  Also, this helps separate any changes I make here from the official "vis", since I might end up 
 
 ## Build instructions
 
@@ -54,6 +54,7 @@ respectively.
 
 [C API](https://vis.readthedocs.io/) as well as [Lua API](http://martanne.github.io/vis/doc/)
 documentation is also available.https://news.ycombinator.com/item?id=11434195
+
 ## Links
 
 - [7 Vim Editors for Better Productivity in 2022](https://geekflare.com/best-vim-editors/) - Vis is one of the editors reviewed here.
@@ -62,3 +63,4 @@ documentation is also available.https://news.ycombinator.com/item?id=11434195
 - [Have you tried vis? (2018)](https://discuss.kakoune.com/t/have-you-tried-vis/123/2) - discussion comparing vis with Kakoune
 - [Hacker News Comments by the Developer of Vis](https://news.ycombinator.com/threads?id=martanne) - there is some interesting wisdom about the implementation of Vis here, e.g., _"As the main developer of an editor (vis) using a similar segmented data structure (a piece chain, similar to a rope, but storing the text junks in a double linked list, thus asymptotically worse) I can attest that the performance is generally very good."
 - [vis: a simpler vim (2016)](http://tuxdiary.com/2016/04/07/vis/) - a quick review
+
