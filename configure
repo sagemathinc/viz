@@ -176,12 +176,13 @@ set -C
 while : ; do i=$(($i+1))
 tmpc="./conf$$-$PPID-$i.c"
 tmpo="./conf$$-$PPID-$i.o"
+tmpexe="./conf$$-$PPID-$i.exe"
 2>|/dev/null > "$tmpc" && break
 test "$i" -gt 50 && fail "$0: cannot create temporary file $tmpc"
 done
 set +C
-trap 'rm -f "$tmpc" "$tmpo"' EXIT QUIT TERM HUP
-trap 'rm -f "$tmpc" "$tmpo" && echo && fail "$0: interrupted"' INT
+trap 'rm -f "$tmpc" "$tmpo" "$tmpexe"' EXIT QUIT TERM HUP
+trap 'rm -f "$tmpc" "$tmpo" "$tmpexe" && echo && fail "$0: interrupted"' INT
 
 #
 # Find a C compiler to use
@@ -300,14 +301,14 @@ int main(int argc, char *argv[]) {
 }
 EOF
 
-	for libcurses in ncursesw ncurses curses; do
+	for libcurses in ncurses ncursesw curses; do
 		printf " checking for %s... " "$libcurses"
 
 		if test "$have_pkgconfig" = "yes" ; then
 			CFLAGS_CURSES=$(pkg-config --cflags $libcurses 2>/dev/null)
 			LDFLAGS_CURSES=$(pkg-config --libs $libcurses 2>/dev/null)
 			if test $? -eq 0 && $CC $CFLAGS $CFLAGS_CURSES "$tmpc" \
-				$LDFLAGS $LDFLAGS_CURSES -o "$tmpo" >/dev/null 2>&1 ; then
+				$LDFLAGS $LDFLAGS_CURSES -o "$tmpexe" >/dev/null 2>&1 ; then
 				CONFIG_CURSES=1
 				printf "yes\n"
 				break
@@ -318,7 +319,7 @@ EOF
 		LDFLAGS_CURSES="-l$libcurses"
 
 		if $CC $CFLAGS $CFLAGS_CURSES "$tmpc" \
-			$LDFLAGS $LDFLAGS_CURSES -o "$tmpo" >/dev/null 2>&1 ; then
+			$LDFLAGS $LDFLAGS_CURSES -o "$tmpexe" >/dev/null 2>&1 ; then
 			CONFIG_CURSES=1
 			printf "yes\n"
 			break
